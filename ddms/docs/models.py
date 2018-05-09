@@ -1,12 +1,6 @@
 from django.db import models
 
 from django.db import models
-from django import forms
-
-
-class User(models.Model):
-    email = models.EmailField(max_length=100, primary_key=True)
-    password = forms.CharField(widget=forms.PasswordInput)
 
 
 class Media(models.Model):
