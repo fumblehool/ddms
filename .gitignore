@@ -2,3 +2,6 @@
 *.*~
 venv/
 ddms/media/
+ddms/templates/node_modules
+ddms/templates/yarn-error.log
+

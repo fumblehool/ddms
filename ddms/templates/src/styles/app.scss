@@ -1,0 +1,142 @@
+* { 
+    padding: 0;
+    margin: 0;
+}
+
+html, body, #fullHt{
+    min-height: 100% !important;
+    height: 100%;
+    color: white;
+    background: #2a2a32;
+}
+
+.header {
+    height: 60px;
+    background: black;
+    display: flex;
+    width: 100%;
+}
+
+.input-field > input {
+    min-width: 300px;
+}
+
+.w-100 {
+    min-width:90%;
+}
+
+.box {
+    width: 15%;
+    height:10%;
+    margin: 10px;
+    border: 2px solid green;
+    display: inline-flex;
+    overflow-wrap: break-word;
+    padding: 20px;
+}
+
+.col-white{
+    color: white;
+}
+
+a {
+    text-decoration: none !important;
+    color: white !important;
+    cursor: pointer;
+}
+
+.cursor {
+    cursor: pointer;
+}
+
+.filter-row {
+    border: 20px;
+    background-color: grey;
+    padding: 10px;
+    cursor: pointer;    
+    margin: 10px;
+    font-size: 20px;
+    padding: 5px;
+}
+
+.filter-selected {
+    background-color: #090909;
+}
+
+.filter-not-selected {
+    background-color: #222222;
+}
+
+.mt-10 {
+    margin-top:10px;
+}
+
+.mt-20 {
+    margin-top:20px;
+}
+
+.facts-card {
+    padding: 10px;
+    align-content: center;
+}
+
+.facts-card > div {
+    border: 1px solid white;
+}
+
+.facts-card > div:hover {
+    box-shadow: 0 2px 4px 0 #a2a2a2;
+    background-color: #33333d;
+}
+
+.black-text {
+    color: black;
+}
+
+.nav-tabs{
+    background-color:#161616;
+}
+
+.tab-content{
+    background-color:#303136;
+    color:#fff;
+    padding:5px
+}
+
+.nav-tabs > li > a{
+    border: medium none;
+}
+
+.nav-tabs > li > a:hover{
+    background-color: #303136 !important;
+    border: medium none;
+    border-radius: 0;
+    color:#fff;
+}
+
+.nav-tabs > li > a {
+    background-color: #2a2a32 !important;
+}
+
+.search-div {
+    height: 400px;
+    overflow: hidden;
+}
+
+
+.search-div:hover {
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.searchbar {
+    color: black;
+    width: 100%;
+    padding: 10px 20px;
+    
+}
+
+.about {
+    text-align: justify;
+    padding: 30px !important;
+}
