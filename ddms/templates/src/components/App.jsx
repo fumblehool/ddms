@@ -8,26 +8,25 @@ import Section from './Section';
 import Login from './Login';
 
 import Home from './Home';
-
-
-
+import NotFound from './NotFound';
+import Register from './Register';
 
 class App extends Component {
   render() {
-    debugger;
     return (
       <BrowserRouter>
       <div>
         <Header />
         {/* <Section docs={docs}/> */}
+        {/* <Home/> */}
         <Grid>
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/docs" component={Home} />
             <Route exact path="/login" component={Login} />
-            {/* <Route exact path="/player" component={Player} />
-            <Route exact path="/" render={() => (<Redirect to="/home" />)} /> */}
-            
+            <Route exact path="/register" component={Register} />
+            <Route exact path="/" render={() => (<Redirect to="/home" />)} />
+            <Route component={NotFound} />
           </Switch>
         </Grid>
       </div>

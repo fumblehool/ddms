@@ -28,7 +28,7 @@ class Login extends Component {
             password: this.state.password
         };
         const csrftoken = this.getCookie('csrftoken')
-        const a = fetch(`http://dev.ddms.com:8000/api/login/`, {
+        const a = fetch(`http://dev.ddms.com:8000/api/register/`, {
             'credentials': 'include',
             'method': 'POST',
             'headers': {
