@@ -83,10 +83,10 @@ const config = {
     'extensions': ['*', '.js', '.jsx', '.scss', '.json']
   },
   'output': {
-    'path': path.resolve(__dirname, './app'),
+    'path': path.resolve(__dirname, './../static'),
     'filename': 'scripts/[name].[chunkhash].js',
     'chunkFilename': 'scripts/[name].[chunkhash].js',
-    'publicPath': '/pwa-app/'
+    'publicPath': '/static/'
   },
   'plugins': [
     new webpack.optimize.CommonsChunkPlugin({
