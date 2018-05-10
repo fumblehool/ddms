@@ -5,32 +5,31 @@ import { Row, Grid } from 'react-bootstrap';
 
 import Header from './Header';
 import Section from './Section';
+import Login from './Login';
 
-const docs = [{
-  'title': 'abc',
-  'type': 'image',
-}]
+import Home from './Home';
+
+
 
 
 class App extends Component {
   render() {
+    debugger;
     return (
-      <BrowserRouter basename="/docs/">
+      <BrowserRouter>
       <div>
         <Header />
+        {/* <Section docs={docs}/> */}
         <Grid>
-        <Section docs={docs}/>
-        </Grid>
-        {/* <Row>
           <Switch>
-            <Route exact path="/home" component={Home} />
-            <Route exact path="/about" component={About} />
-            <Route exact path="/team" component={Team} />
-            <Route exact path="/player" component={Player} />
-            <Route exact path="/" render={() => (<Redirect to="/home" />)} />
-            <Route component={NotFound} />
+            <Route exact path="/" component={Home} />
+            <Route exact path="/docs" component={Home} />
+            <Route exact path="/login" component={Login} />
+            {/* <Route exact path="/player" component={Player} />
+            <Route exact path="/" render={() => (<Redirect to="/home" />)} /> */}
+            
           </Switch>
-        </Row> */}
+        </Grid>
       </div>
       </BrowserRouter>
     );

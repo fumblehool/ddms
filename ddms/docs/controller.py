@@ -1,14 +1,17 @@
 import datetime
 from .models import Media, Category
 from IPython import embed
-
+from django.contrib.auth.models import User
+# from django.contrib.auth import authenticate, login as auth_login
 
 def register(user):
     # Register user
+    embed()
     return ("Register route Success")
 
 
 def login(user):
+    from IPython import embed;embed()
     return ("login route success")
 
 
