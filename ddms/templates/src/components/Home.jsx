@@ -12,7 +12,8 @@ class Home extends Component {
         organisedDocs: [],
         searchText: '',
         docSelected: false,
-        selectedDoc: ''
+        selectedDoc: '',
+        filterBy: 'all'
     }
 
     componentWillMount(){
@@ -57,6 +58,12 @@ class Home extends Component {
         })
     }
 
+    handleFilterChange = (filterBy) => {
+        this.setState({
+            filterBy
+        });
+    }
+
     render(){
         return (
             <div>
@@ -64,11 +71,13 @@ class Home extends Component {
                     searchTextChange={this.searchTextChange}
                     docSelected={this.state.docSelected}
                     deleteSelectedDoc={this.deleteSelectedDoc}
+                    handleFilterChange={this.handleFilterChange}
                 />
                 <Section
                     docs={this.state.organisedDocs}
                     selectedDoc={this.state.selectedDoc}
                     ChangeselectedDoc={this.ChangeselectedDoc}
+                    filterBy={this.state.filterBy}
                 />
             </div>
         )

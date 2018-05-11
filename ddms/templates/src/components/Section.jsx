@@ -23,18 +23,21 @@ class Section extends Component {
                     if(doc['media_id'] === this.props.selectedDoc){
                         name += "selected-card"
                     }
-                    return (
-                        <Col key={index} xs={12} md={3} className={name}>
-                            <div className="text-center cursor" onClick={()=>{this.onDocClick(index)}}>
-                                <h1>
-                                    {doc.media_title}
-                                </h1>
-                                <h2>
-                                    {doc.media_type}
-                                </h2>
-                            </div>
-                        </Col>
-                    );
+                    
+                    if(doc.media_type === this.props.filterBy || this.props.filterBy === 'all'){
+                        return (
+                            <Col key={index} xs={12} md={3} className={name}>
+                                <div className="text-center cursor" onClick={()=>{this.onDocClick(index)}}>
+                                    <h1>
+                                        {doc.media_title}
+                                    </h1>
+                                    <h2>
+                                        {doc.media_type}
+                                    </h2>
+                                </div>
+                            </Col>
+                        );
+                    }                    
                 });
             })()}
             </Row>

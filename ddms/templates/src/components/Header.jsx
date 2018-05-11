@@ -7,8 +7,9 @@ class Header extends Component {
 
     state = {
         showModal: false,
-        docType: '',
-        text: ''
+        docType: 'Type',
+        text: '',
+        filterBy: 'all'
 	};
 
     handleInputChange = (e) => {
@@ -42,9 +43,17 @@ class Header extends Component {
         });
     }
 
-    handleSubmit = () => {
+    handleFilterChange = (filterBy) => {
+        this.setState({
+            filterBy
+        });
+        this.props.handleFilterChange(filterBy);
+    }
+
+    handleSubmit = (e) => {
         const file = this.state.file;
         const docType = this.state.docType;
+        e.preventDefault();
 
         DocApi.uploadFile(file, docType)
         .then((r)=> r.json())
@@ -74,16 +83,15 @@ class Header extends Component {
                             />
 
                             <DropdownButton
-                                bsSize="large"
-                                title="Doc Type"
+                                bsSize="medium"
+                                bsStyle="primary"
+                                title={this.state.docType}
                                 id="dropdown-size-large"
                                 onSelect={this.handleTypeSelect}
                             >
-                                <MenuItem eventKey="economic">Economic</MenuItem>
-                                <MenuItem eventKey="personal">Personal</MenuItem>
-                                <MenuItem eventKey="something">Something</MenuItem>
-                                <MenuItem divider />
-                                <MenuItem eventKey="somethingelse">Separated else</MenuItem>
+                                <MenuItem eventKey="financial">Financial</MenuItem>
+                                <MenuItem eventKey="marketing">Marketing</MenuItem>
+                                <MenuItem eventKey="technical">Technical</MenuItem>
                             </DropdownButton>
                             <Button onClick={this.handleSubmit}> Submit </Button>
 
@@ -111,6 +119,21 @@ class Header extends Component {
                     <Navbar.Form pullLeft className="w-100">
                     <FormGroup className="input-field">
                         <FormControl onChange={this.handleInputChange} onKeyPress={this.checkEnterKey} type="text" placeholder="Search" />
+                        <DropdownButton
+                                bsSize="primary"
+                                bsStyle="medium"
+                                title={this.state.filterBy}
+                                id="dropdown-size-large"
+                                onSelect={this.handleFilterChange}
+                                className="m-l-lg"
+                            >
+                                <MenuItem eventKey="all">All</MenuItem>
+                                <MenuItem eventKey="financial">Financial</MenuItem>
+                                <MenuItem eventKey="marketing">Marketing</MenuItem>
+                                <MenuItem eventKey="technical">Technical</MenuItem>
+                            </DropdownButton>
+                    
+                    
                     </FormGroup>
 
                     {(()=>{
