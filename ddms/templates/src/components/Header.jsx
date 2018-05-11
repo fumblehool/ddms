@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
-import {Row, Navbar, Nav, NavItem, FormControl, FormGroup, Button, Modal } from 'react-bootstrap';
+import {Row, Navbar, Nav, NavItem, FormControl, FormGroup, Button, Modal, MenuItem, DropdownButton } from 'react-bootstrap';
+
+import DocApi from './../Api/api';
 
 class Header extends Component {
 
     state = {
-		showModal: false
+        showModal: false,
+        docType: ''
 	};
 
     handleInputChange = (e) => {
@@ -25,7 +28,26 @@ class Header extends Component {
 		this.setState({
 			showModal: false
 		});
-	}
+    }
+    
+    handleTypeSelect = (e) => {
+        this.setState({
+            docType: e
+        });
+    }
+
+    handleSubmit = () => {
+        const file = this.state.file;
+        const docType = this.state.docType;
+
+        DocApi.uploadFile(file, docType)
+        .then((r)=> r.json())
+        .then((r)=> { alert(e)})
+        .catch((e)=> { console.log(e)})
+    }
+    onChange(e) {
+        this.setState({file:e.target.files[0]})
+    }
 
     ComponentModal = () => {
 		return (
@@ -37,8 +59,31 @@ class Header extends Component {
 				</Modal.Header>
 				<Modal.Body>
 					<p>
-						<input type="file"/>
-                        <Button></Button>
+                        <FormGroup
+                            controlId="formBasicFile"
+                            >
+                            <FormControl
+                                type="file"
+                                onChange={this.onChange}
+                            />
+
+                            <DropdownButton
+                                bsSize="large"
+                                title="Doc Type"
+                                id="dropdown-size-large"
+                                onSelect={this.handleTypeSelect}
+                            >
+                                <MenuItem eventKey="economic">Economic</MenuItem>
+                                <MenuItem eventKey="personal">Personal</MenuItem>
+                                <MenuItem eventKey="something">Something</MenuItem>
+                                <MenuItem divider />
+                                <MenuItem eventKey="somethingelse">Separated else</MenuItem>
+                            </DropdownButton>
+                            <Button onClick={this.handleSubmit}> Submit </Button>
+
+                        </FormGroup>
+
+
 					</p>
 				</Modal.Body>
 			</Modal>

@@ -92,7 +92,7 @@ module.exports = {
     'extensions': ['*', '.js', '.jsx', '.scss', '.json']
   },
   'output': {
-    'path': path.resolve(__dirname, './app'),
+    'path': path.resolve(__dirname, './dist'),
     'filename': 'scripts/[name].[hash].js',
     'chunkFilename': 'scripts/[name].[hash].js'
   },

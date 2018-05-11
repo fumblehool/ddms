@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 
 import Section from './Section';
-import fetch from 'isomorphic-fetch';
+import Header from './Header';
+
+import DocApi from './../Api/api';
+
+
 const docs = [{
     'title': 'abc',
     'type': 'image',
@@ -9,21 +13,26 @@ const docs = [{
   import Cookies from 'js-cookie';
   
 class Home extends Component {
-    componentDidMount(){
-        const a = fetch(`http://dev.ddms.com:8000/api/list/`, {
-            'credentials': 'include'
-          })
-          .then((r)=> {
-              debugger;
+    state = {
+        docs: []
+    }
+
+    componentWillMount(){
+        DocApi.fetchDocsList()
+          .then((r)=> r.json())
+          .then((r) => {
+              this.setState({
+                  docs: r
+              })
           })
           .catch((e)=>{
-              debugger;
           })
     }
     render(){
         return (
             <div>
-            <Section docs={docs}/>
+                <Header />
+                <Section docs={this.state.docs}/>
             </div>
         )
     }

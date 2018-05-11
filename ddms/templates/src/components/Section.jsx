@@ -15,7 +15,7 @@ class Section extends Component {
                         <Col key={index} xs={12} md={3} className="facts-card">
                             <div className="text-center cursor" onClick={()=>{this.onDocClick(index)}}>
                             hello - doc
-                            {doc.title} of type {doc.type}
+                            {doc.media_title} of type {doc.media_type}
                             </div>
                         </Col>
                     );

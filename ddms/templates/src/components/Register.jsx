@@ -3,6 +3,8 @@ import {Row, Navbar, Nav, NavItem, FormControl, FormGroup, Button, Modal } from 
 import fetch from 'isomorphic-fetch';
 import queryString from 'query-string';
 
+import { getCookie } from './../utils';
+
 class Login extends Component {
 
     state = {
@@ -27,7 +29,7 @@ class Login extends Component {
             username: this.state.username,
             password: this.state.password
         };
-        const csrftoken = this.getCookie('csrftoken')
+        const csrftoken = getCookie('csrftoken')
         const a = fetch(`http://dev.ddms.com:8000/api/register/`, {
             'credentials': 'include',
             'method': 'POST',

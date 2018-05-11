@@ -83,10 +83,13 @@ def add_docs(request, user_id):
     # get the current timestamp
     timestamp = datetime.datetime.now()
     # insert new entry
+    embed()
+
+    category_id = Category.objects.filter(category_text=request.doctype)[0].category_id
     record = Media.objects.create(created_by=user_id, is_deleted=False,
                                        created_at=timestamp, last_edited_at=timestamp,
-                                       media_type=1, media_title='media_title', #request.mediaTitle,
-                                       file=request.FILES['filename'])
+                                       media_type=category_id, media_title='media_title', #request.mediaTitle,
+                                       file=request.POST.get('filename'))
     record.save()
 
     return "added successfully"

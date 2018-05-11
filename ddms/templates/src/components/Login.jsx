@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import {Row, Navbar, Nav, NavItem, FormControl, FormGroup, Button, Modal } from 'react-bootstrap';
-import fetch from 'isomorphic-fetch';
-import queryString from 'query-string';
+
+import { getCookie } from './../utils';
+import DocApi from './../Api/api';
 
 class Login extends Component {
 
@@ -27,35 +28,11 @@ class Login extends Component {
             username: this.state.username,
             password: this.state.password
         };
-        const csrftoken = this.getCookie('csrftoken')
-        const a = fetch(`http://dev.ddms.com:8000/api/login/`, {
-            'credentials': 'include',
-            'method': 'POST',
-            'headers': {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'X-CSRFToken': csrftoken
-            },
-            'body': queryString.stringify(body)
-          })
+        DocApi.loginUser(body)
           .then((r)=> {
               debugger;
           })
     }
-
-    getCookie = (name) => {
-        if (!document.cookie) {
-          return null;
-        }
-        const token = document.cookie.split(';')
-          .map(c => c.trim())
-          .filter(c => c.startsWith(name + '='));
-    
-        if (token.length === 0) {
-          return null;
-        }
-        return decodeURIComponent(token[0].split('=')[1]);
-    }
-
 
     render() {
         return(

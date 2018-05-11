@@ -4,7 +4,6 @@ import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { Row, Grid } from 'react-bootstrap';
 
 import Header from './Header';
-import Section from './Section';
 import Login from './Login';
 
 import Home from './Home';
@@ -15,10 +14,6 @@ class App extends Component {
   render() {
     return (
       <BrowserRouter>
-      <div>
-        <Header />
-        {/* <Section docs={docs}/> */}
-        {/* <Home/> */}
         <Grid>
           <Switch>
             <Route exact path="/" component={Home} />
@@ -29,7 +24,6 @@ class App extends Component {
             <Route component={NotFound} />
           </Switch>
         </Grid>
-      </div>
       </BrowserRouter>
     );
   }
