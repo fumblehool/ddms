@@ -7,7 +7,7 @@ class Header extends Component {
 
     state = {
         showModal: false,
-        docType: 'Type',
+        docType: 'financial',
         text: '',
         filterBy: 'all'
 	};
@@ -51,17 +51,19 @@ class Header extends Component {
     }
 
     handleSubmit = (e) => {
-        const file = this.state.file;
-        const docType = this.state.docType;
-        e.preventDefault();
-
-        DocApi.uploadFile(file, docType)
+        DocApi.uploadFile(this.state.file, this.state.docType)
         .then((r)=> r.json())
-        .then((r)=> { alert(e)})
+        .then((r)=> {
+            alert("Upload Successful!");
+            this.props.addNewUpload(r);
+            this.closeModalDialog();
+        })
         .catch((e)=> { console.log(e)})
     }
-    onChange(e) {
-        this.setState({file:e.target.files[0]})
+    onChange = (e) => {
+        this.setState({
+            file:e.target.files[0]
+        })
     }
 
     ComponentModal = () => {

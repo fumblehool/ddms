@@ -44,14 +44,13 @@ export default {
 
     uploadFile(file, docType){
         var formData  = new FormData();
-        formData.append('filename', file);
+        formData.append('file', file);
         formData.append('doctype', docType);
 
         return fetch(`${API_HOST}/api/docs/`, {
             'credentials': 'include',
             'method': 'POST',
             'headers': {
-                'Content-Type': 'multipart/form-data',
                 'X-CSRFToken': getCookie('csrftoken')
             },
             'body': formData

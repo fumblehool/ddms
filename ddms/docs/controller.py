@@ -83,13 +83,27 @@ def add_docs(request, user_id):
     # get the current timestamp
     timestamp = datetime.datetime.now()
     # insert new entry
-    embed()
+    
 
-    category_id = Category.objects.filter(category_text=request.doctype)[0].category_id
+    category_id = Category.objects.filter(category_text=request.POST.get('doctype'))[0].category_id
     record = Media.objects.create(created_by=user_id, is_deleted=False,
                                        created_at=timestamp, last_edited_at=timestamp,
-                                       media_type=category_id, media_title='media_title', #request.mediaTitle,
-                                       file=request.POST.get('filename'))
-    record.save()
+                                       media_type=category_id, media_title=request.FILES['file'].name, #request.mediaTitle,
+                                       file=request.FILES['file'])
+    
+    response = {}
+    
+    response['media_id'] = record.media_id
+    response['media_title'] = record.media_title
+    response['media_type'] = Category.objects.filter(category_id=record.media_type)[0].category_text
+    response['created_at'] = int(record.created_at.strftime('%s')) * 1000
+    response['last_edited_at'] = int(record.created_at.strftime('%s')) * 1000
+    response['file'] = '/media/'+ record.file.name
+    user_details = {}
+    user = User.objects.get(pk=user_id)
+    user_details['user_id'] = user_id
+    user_details['username'] = user.username
+    user_details['email'] = user.email
+    response['created_by'] = user_details
 
-    return "added successfully"
+    return response

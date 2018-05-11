@@ -32,7 +32,7 @@ class Home extends Component {
     searchTextChange = (searchText) => {
         const filterText = searchText.toLowerCase();
 
-        const organisedDocs = this.state.docs.filter((doc)=> doc['media_title'].indexOf(filterText) !== -1);
+        const organisedDocs = this.state.docs.filter((doc)=> doc['media_title'].toLowerCase().indexOf(filterText) !== -1);
         this.setState({
             organisedDocs,
             searchText
@@ -50,6 +50,7 @@ class Home extends Component {
         DocApi.deleteDoc(this.state.selectedDoc)
         .then((r)=> r.json())
         .then((r) => {
+            alert("Document Deleted Successfully");
             this.setState({
                 docs: this.state.docs.filter((doc) => doc['media_id'] !== this.state.selectedDoc),
                 organisedDocs: this.state.organisedDocs.filter((doc) => doc['media_id'] !== this.state.selectedDoc),
@@ -64,6 +65,18 @@ class Home extends Component {
         });
     }
 
+    addNewUpload = (doc) => {
+        const filterText = this.state.searchText.toLowerCase();
+        let docs = this.state.docs;
+        docs = docs.concat(doc);
+        const organisedDocs = docs.filter((doc)=> doc['media_title'].toLowerCase().indexOf(filterText) !== -1);
+
+        this.setState({
+            docs,
+            organisedDocs
+        })
+    }
+
     render(){
         return (
             <div>
@@ -72,6 +85,7 @@ class Home extends Component {
                     docSelected={this.state.docSelected}
                     deleteSelectedDoc={this.deleteSelectedDoc}
                     handleFilterChange={this.handleFilterChange}
+                    addNewUpload={this.addNewUpload}
                 />
                 <Section
                     docs={this.state.organisedDocs}
