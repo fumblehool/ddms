@@ -7,15 +7,21 @@ class Header extends Component {
 
     state = {
         showModal: false,
-        docType: ''
+        docType: '',
+        text: ''
 	};
 
     handleInputChange = (e) => {
-        console.log('changed');
+        this.props.searchTextChange(e.target.value);
+        this.setState({
+            text: e.target.value
+        });
     };
 
     checkEnterKey = (e) => {
-        console.log(e);
+        if(e.key == 'Enter'){
+            
+        }
     }
 
     showModalDialog = () => {
@@ -106,6 +112,16 @@ class Header extends Component {
                     <FormGroup className="input-field">
                         <FormControl onChange={this.handleInputChange} onKeyPress={this.checkEnterKey} type="text" placeholder="Search" />
                     </FormGroup>
+
+                    {(()=>{
+                        if(this.props.docSelected){
+                            return(
+                                <Button className="pull-right m-l-lg" bsStyle="primary" onClick={this.props.deleteSelectedDoc}>
+                                    Delete
+                                </Button>
+                            )
+                        }
+                    })()}
                     <Button className="pull-right" bsStyle="primary" onClick={this.showModalDialog}>
                         Upload
                     </Button>

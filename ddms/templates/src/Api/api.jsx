@@ -9,7 +9,6 @@ import { getCookie } from './../utils';
 
 export default {
     fetchDocsList(){
-        debugger;
         return fetch(`${API_HOST}/api/list/`, {
             'credentials': 'include',
             'headers': {
@@ -57,5 +56,17 @@ export default {
             },
             'body': formData
         })
+    },
+
+    deleteDoc(doc_id){
+        return fetch(`${API_HOST}/api/docs/${doc_id}/`, {
+            'credentials': 'include',
+            'method': 'DELETE',
+            'headers': {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-CSRFToken': getCookie('csrftoken')
+            },
+        })
+
     }
 };

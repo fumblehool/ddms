@@ -6,15 +6,13 @@ import Header from './Header';
 import DocApi from './../Api/api';
 
 
-const docs = [{
-    'title': 'abc',
-    'type': 'image',
-  }]
-  import Cookies from 'js-cookie';
-  
 class Home extends Component {
     state = {
-        docs: []
+        docs: [],
+        organisedDocs: [],
+        searchText: '',
+        docSelected: false,
+        selectedDoc: ''
     }
 
     componentWillMount(){
@@ -22,17 +20,56 @@ class Home extends Component {
           .then((r)=> r.json())
           .then((r) => {
               this.setState({
-                  docs: r
+                  docs: r,
+                  organisedDocs: r
               })
           })
           .catch((e)=>{
           })
     }
+
+    searchTextChange = (searchText) => {
+        const filterText = searchText.toLowerCase();
+
+        const organisedDocs = this.state.docs.filter((doc)=> doc['media_title'].indexOf(filterText) !== -1);
+        this.setState({
+            organisedDocs,
+            searchText
+        });
+    }
+
+    ChangeselectedDoc = (selectedDoc) => {
+        this.setState({
+            selectedDoc,
+            docSelected: true
+        });
+    }
+
+    deleteSelectedDoc = () => {
+        DocApi.deleteDoc(this.state.selectedDoc)
+        .then((r)=> r.json())
+        .then((r) => {
+            this.setState({
+                docs: this.state.docs.filter((doc) => doc['media_id'] !== this.state.selectedDoc),
+                organisedDocs: this.state.organisedDocs.filter((doc) => doc['media_id'] !== this.state.selectedDoc),
+                selectedDoc: {}
+            })
+        })
+    }
+
     render(){
         return (
             <div>
-                <Header />
-                <Section docs={this.state.docs}/>
+                <Header
+                    searchTextChange={this.searchTextChange}
+                    docSelected={this.state.docSelected}
+                    deleteSelectedDoc={this.deleteSelectedDoc}
+                />
+                <Section
+                    docs={this.state.organisedDocs}
+                    selectedDoc={this.state.selectedDoc}
+                    ChangeselectedDoc={this.ChangeselectedDoc}
+                />
             </div>
         )
     }

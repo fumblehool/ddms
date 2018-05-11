@@ -6,7 +6,7 @@
 html, body, #fullHt{
     min-height: 100% !important;
     height: 100%;
-    color: red;
+    color: white;
     background: #2a2a32;
 }
 
@@ -78,6 +78,7 @@ a {
 .facts-card {
     padding: 10px;
     align-content: center;
+    min-height: 150px;
 }
 
 .facts-card > div {
@@ -87,6 +88,14 @@ a {
 .facts-card > div:hover {
     box-shadow: 0 2px 4px 0 #a2a2a2;
     background-color: #33333d;
+}
+
+.selected-card {
+    background-color: #33336f;
+}
+
+.m-l-lg {
+    margin-left: 20px;
 }
 
 .black-text {
