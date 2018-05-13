@@ -69,7 +69,8 @@ export default {
             'credentials': 'include',
             'method': 'POST',
             'headers': {
-                'X_TOKEN': getCookie('token')
+                'X_TOKEN': getCookie('token'),
+                'X-CSRFToken': getCookie('csrftoken')
             },
             'body': formData
         })
@@ -81,8 +82,27 @@ export default {
             'method': 'DELETE',
             'headers': {
                 'Content-Type': 'application/x-www-form-urlencoded',
-                'X_TOKEN': getCookie('token')
+                'X_TOKEN': getCookie('token'),
+                'X-CSRFToken': getCookie('csrftoken')
             },
         })
+    },
+
+    updateDoc(doc_id, field, value){
+        const body = {
+            doc_id,
+            field,
+            value
+        }
+        return fetch(`${API_HOST}/api/docs/${doc_id}/`, {
+            'credentials': 'include',
+            'method': 'PUT',
+            'headers': {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X_TOKEN': getCookie('token')
+            },
+            'body': queryString.stringify(body)
+        })
     }
+
 };

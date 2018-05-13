@@ -93,9 +93,9 @@ class Section extends Component {
         return(
             <Row>
             {this.ComponentModal()}
-                <div className="fixedContainer" onClick={this.showModalDialog}>
+                <Button bsStyle="success" className="fixedContainer" onClick={this.showModalDialog}>
                     Upload
-                </div>
+                </Button>
             {(()=>{
                 if(this.props.docs.length ===0){
                     return (

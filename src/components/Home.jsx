@@ -50,12 +50,14 @@ class Home extends Component {
         DocApi.deleteDoc(this.state.selectedDoc)
         .then((r)=> r.json())
         .then((r) => {
-            alert("Document Deleted Successfully");
-            this.setState({
-                docs: this.state.docs.filter((doc) => doc['media_id'] !== this.state.selectedDoc),
-                organisedDocs: this.state.organisedDocs.filter((doc) => doc['media_id'] !== this.state.selectedDoc),
-                selectedDoc: {}
-            })
+            if(r['status'] === 'successful'){
+                alert("Document Update Successfully");
+                this.setState({
+                    docs: this.state.docs.filter((doc) => doc['media_id'] !== this.state.selectedDoc),
+                    organisedDocs: this.state.organisedDocs.filter((doc) => doc['media_id'] !== this.state.selectedDoc),
+                    selectedDoc: {}
+                })
+            }
         })
     }
 
@@ -77,6 +79,36 @@ class Home extends Component {
         })
     }
 
+    handleEditDocName = (docName) => {
+        DocApi.updateDoc(this.state.selectedDoc, 'media_title', docName)
+        .then((r)=> r.json())
+        .then((r) => {
+            if(r['status'] === 'successful'){
+                alert("Document Updated Successfully");
+                let docs = this.state.docs.map((doc)=>{
+                    if(doc['media_id'] === this.state.selectedDoc){
+                        doc['media_title'] = docName;
+                        doc['last_edited_at'] = r['last_edited_at'];
+                    }
+                    return doc;
+                })
+
+                let organisedDocs = this.state.organisedDocs.map((doc)=> {
+                    if(doc['media_id'] === this.state.selectedDoc){
+                        doc['media_title'] = docName;
+                        doc['last_edited_at'] = r['last_edited_at'];
+                    }
+                    return doc;
+                })
+
+                this.setState({
+                    docs,
+                    organisedDocs
+                })
+            }
+        })
+    }
+
     render(){
         return (
             <div>
@@ -85,6 +117,7 @@ class Home extends Component {
                     docSelected={this.state.docSelected}
                     deleteSelectedDoc={this.deleteSelectedDoc}
                     handleFilterChange={this.handleFilterChange}
+                    handleEditDocName={this.handleEditDocName}
                 />
                 <Section
                     docs={this.state.organisedDocs}

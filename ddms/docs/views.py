@@ -49,7 +49,7 @@ def get_all_docs(request):
 # @login_required
 def edit_doc(request, doc_id):
     try:
-        response = controller.edit_doc(doc_id, request.method)
+        response = controller.edit_doc(request, doc_id, request.method)
         # create JSON response object
         return HttpResponse(status=200,
                             content_type='application/json',

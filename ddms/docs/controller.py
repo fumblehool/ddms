@@ -1,12 +1,11 @@
-import datetime
 from .models import Media, Category
 from IPython import embed
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django.middleware.csrf import _get_new_csrf_token
-
+from django.http import QueryDict
 from rest_framework.authtoken.models import Token
-
+from django.utils import timezone
 
 def register(request):
     # Register user
@@ -50,7 +49,7 @@ def get_all_docs(request):
     return response
 
 
-def edit_doc(media_id, method):
+def edit_doc(request, media_id, method):
     if method == 'GET':
         media_details = Media.objects.filter(media_id=media_id, is_deleted=False)
         return str(media_details)
@@ -61,16 +60,28 @@ def edit_doc(media_id, method):
             # set isDeleted flag true for the entry.
             entry.is_deleted = True
             # update the updatedAt field.
-            entry.last_edited_at = datetime.datetime.now()
+            entry.last_edited_at = timezone.now()
             # save the changes
             entry.save()
             # return success
-            return "Successful"
+            response = {}
+            response['status'] = "successful"
+            return response
         except Media.DoesNotExist:
             # if record does not exist
             return "Entry not found"
     elif method == 'PUT':
-        pass
+        query_params = QueryDict(request.body)
+
+        media = Media.objects.get(media_id=query_params['doc_id'])
+        media.media_title = query_params['value']
+        timestamp = timezone.now()
+        media.last_edited_at = timezone.now()
+        media.save()
+        response = {}
+        response['status'] = "successful"
+        response['last_edited_at'] = int(timestamp.strftime('%s')) * 1000
+        return response
     return (str(method))
 
 
@@ -79,7 +90,7 @@ def add_docs(request):
     response = {}
 
     # get the current timestamp
-    timestamp = datetime.datetime.now()
+    timestamp = timezone.now()
     
     # get user_id
     token = request.COOKIES.get('token')
