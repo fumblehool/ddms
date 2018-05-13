@@ -10,16 +10,21 @@ import Home from './Home';
 import NotFound from './NotFound';
 import Register from './Register';
 
-import { getCookie } from './../utils';
+import { getCookie, setCookie } from './../utils';
 
 class App extends Component {
+
+  setCookie = (val) => {
+    setCookie('token', val);
+  }
+
   render() {
     return (
       <BrowserRouter>
         <Grid>
 
           {(()=>{
-            if(getCookie('csrftoken')){
+            if(getCookie('token')){
               return (
                 <Switch>
                   <Route exact path="/" component={Home} />
@@ -34,7 +39,7 @@ class App extends Component {
               <Switch>
                 <Route exact path="/" render={()=> (<Redirect to="/login" />)} />
                 <Route exact path="/docs" render={()=> (<Redirect to="/login" />)} />
-                <Route exact path="/login" component={Login} />
+                <Route exact path="/login" render={(props)=> <Login {...props} setCookie={this.setCookie}/>} />
                 <Route exact path="/register" component={Register} />
                 <Route component={NotFound} />
               </Switch>

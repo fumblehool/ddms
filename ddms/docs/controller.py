@@ -5,6 +5,10 @@ from django.contrib.auth.models import User
 # from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth import authenticate
 from django.middleware.csrf import _get_new_csrf_token
+
+from rest_framework.authtoken.models import Token
+
+
 def register(request):
     # Register user
     username = request.POST.get('username', None)
@@ -20,22 +24,11 @@ def register(request):
         return response
 
 
-def login(request):
-    user = authenticate(username=request.POST.get('username', None), password=request.POST.get('password', None))
-    response = {}
-    if user:
-        request.session['_auth_user_id'] = user.pk
-        response['csrf'] = _get_new_csrf_token()
-        request.session['loggedIn'] = True
-    return response
+def get_all_docs(request):
+    token = request.COOKIES.get('token')
 
+    user_id = Token.objects.get(key=token).user_id
 
-def logout(request):
-    del request.session
-    return ("user logged out")
-
-
-def get_all_docs(user_id):
     media_list = Media.objects.filter(created_by=user_id, is_deleted=False)
     
     response = []

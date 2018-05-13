@@ -9,7 +9,7 @@ class Login extends Component {
     state = {
         username: '',
         password: '',
-        redirect: false
+        redirect: false,
 	};
 
     handleUsernameChange = (e) => {
@@ -33,13 +33,13 @@ class Login extends Component {
         DocApi.loginUser(body)
           .then((r)=> r.json())
           .then((r)=> {
-            if(r['csrf']){
-                setCookie('csrftoken', r['csrf']);
+            if(r['token']){
+                this.props.setCookie(r['token']);
                 this.setState({
                     redirect: true
                 })
+                window.location.reload();
             }
-            alert(r);
           })
           .catch((error)=>{
               console.log(error);
@@ -60,7 +60,7 @@ class Login extends Component {
                 })()}
   
             <div className="Login">
-            <form onSubmit={this.onSubmit}>
+            <form>
                 <FormGroup controlId="email" bsSize="large">
                     <ControlLabel>Username</ControlLabel>
                     <FormControl
@@ -83,7 +83,8 @@ class Login extends Component {
                     block
                     bsSize="large"
                     disabled={!this.validateForm()}
-                    type="submit"
+                    type="button"
+                    onClick={this.onSubmit}
                 >
                     Login
                 </Button>

@@ -13,6 +13,7 @@ from IPython import embed
 def index(request):
     return render(request, "index.html")
 
+
 @csrf_exempt
 def register(request):
     if request.method == 'GET':
@@ -27,31 +28,10 @@ def register(request):
         except Exception as e:
             return HttpResponseBadRequest(json.dumps(str(e)))
 
-@csrf_exempt
-def login(request):
-    
-    if request.method == 'GET':
-        return render(request, "app/test.html")
-    else:
-
-        try:
-            response = controller.login(request)
-            return HttpResponse(status=200,
-                                content_type='application/json',
-                                content=json.dumps(response))
-        except Exception as e:
-            return HttpResponseBadRequest(json.dumps(str(e)))
-
-
-def logout(request):
-    response = controller.logout(request)
-    return logout(request)
-
 
 def get_all_docs(request):
-    user_id = request.session['_auth_user_id']
     try:
-        response = controller.get_all_docs(user_id)
+        response = controller.get_all_docs(request)
         
         r = HttpResponse(status=200,
                             content_type='application/json',

@@ -13,7 +13,7 @@ export default {
             'credentials': 'include',
             'headers': {
                 'Content-Type': 'application/x-www-form-urlencoded',
-                'X-CSRFToken': getCookie('csrftoken')
+                'X_TOKEN': getCookie('token')
             },
         })
     },

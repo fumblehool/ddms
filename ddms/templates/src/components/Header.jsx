@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {Row, Navbar, Nav, NavItem, FormControl, FormGroup, Button, Modal, MenuItem, DropdownButton } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 import DocApi from './../Api/api';
+import { removeCookie } from './../utils';
 
 class Header extends Component {
 
@@ -10,7 +11,8 @@ class Header extends Component {
         docType: 'financial',
         text: '',
         filterBy: 'all',
-        redirect: false
+        redirect: false,
+        redirectUrl: '/docs'
 	};
 
     handleInputChange = (e) => {
@@ -63,12 +65,12 @@ class Header extends Component {
     }
 
     logoutUser = () => {
-        DocApi.logoutUser()
-        .then((r)=>{
-            this.setState({
-                redirect: true
-            })
+        removeCookie('token');
+        this.setState({
+            redirectUrl: '/login',
+            redirect: true
         })
+        window.location.reload();
     }
 
 
@@ -120,7 +122,7 @@ class Header extends Component {
 
     render() {
         if (this.state.redirect) {
-            return <Redirect to='/docs'/>;
+            return <Redirect to={this.state.redirectUrl}/>;
         }
         
         return(

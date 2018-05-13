@@ -7,8 +7,8 @@ export const setCookie = (name, value) => {
   return Cookies.set(name, value);
 };
 
-export const removeCookie = (name, options = {}) => {
-  return Cookies.remove(name, options);
+export const removeCookie = (name) => {
+  return Cookies.remove(name);
 };
 
 
