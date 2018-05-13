@@ -15,6 +15,7 @@ class Media(models.Model):
 
 
 class Category(models.Model):
+    verbose_name_plural = "categories"
     category_id = models.IntegerField(primary_key=True)
     category_text = models.CharField(max_length=100)
 

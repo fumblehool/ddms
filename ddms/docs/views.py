@@ -5,12 +5,13 @@ from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedire
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.views import login
-from django.contrib.auth import authenticate
+
 from django.contrib.auth import logout
+
 from IPython import embed
 
 def index(request):
-    return render(request, "app/index.html")
+    return render(request, "index.html")
 
 @csrf_exempt
 def register(request):
@@ -28,27 +29,27 @@ def register(request):
 
 @csrf_exempt
 def login(request):
-    if request.user.is_authenticated:
-        return HttpResponse('User logged in')
+    
     if request.method == 'GET':
         return render(request, "app/test.html")
     else:
-        user = authenticate(username=request.POST.get('username', None), password=request.POST.get('password', None))
-        if user:
-            return HttpResponse('User Logged In')
-        return HttpResponseBadRequest('Username or Password Invalid')
-        
+
+        try:
+            response = controller.login(request)
+            return HttpResponse(status=200,
+                                content_type='application/json',
+                                content=json.dumps(response))
+        except Exception as e:
+            return HttpResponseBadRequest(json.dumps(str(e)))
 
 
-
-@csrf_exempt
 def logout(request):
+    response = controller.logout(request)
     return logout(request)
 
-@csrf_exempt
-@login_required
+
 def get_all_docs(request):
-    user_id = request.user.id
+    user_id = request.session['_auth_user_id']
     try:
         response = controller.get_all_docs(user_id)
         
@@ -81,7 +82,7 @@ def add_docs(request):
         return HttpResponseBadRequest(json.dumps("Please send POST request"))
 
     # get user_id
-    user_id = request.user.id
+    user_id = request.session['_auth_user_id']
 
     #get response from controller
     try:

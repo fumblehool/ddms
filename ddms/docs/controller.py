@@ -3,28 +3,36 @@ from .models import Media, Category
 from IPython import embed
 from django.contrib.auth.models import User
 # from django.contrib.auth import authenticate, login as auth_login
-
+from django.contrib.auth import authenticate
+from django.middleware.csrf import _get_new_csrf_token
 def register(request):
     # Register user
     username = request.POST.get('username', None)
     password = request.POST.get('username', None)
     user, created = User.objects.get_or_create(username=username, email='nil')
     if created:
-        user.set_password(password)
-
         user.save()
-
-    embed()
-    return ("Register route Success")
-
-
-def login(user):
-    from IPython import embed;embed()
-    return ("login route success")
+        user.set_password(password)
+        response = {}
+        response['user_id'] = user.pk
+        request.session['_auth_user_id'] = user.pk
+        request.session['loggedIn'] = True
+        return response
 
 
-def logout():
-    return ("logout route")
+def login(request):
+    user = authenticate(username=request.POST.get('username', None), password=request.POST.get('password', None))
+    response = {}
+    if user:
+        request.session['_auth_user_id'] = user.pk
+        response['csrf'] = _get_new_csrf_token()
+        request.session['loggedIn'] = True
+    return response
+
+
+def logout(request):
+    del request.session
+    return ("user logged out")
 
 
 def get_all_docs(user_id):

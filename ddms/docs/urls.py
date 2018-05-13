@@ -14,5 +14,6 @@ urlpatterns = [
     path('api/list/', views.get_all_docs, name='list'),
     path('api/docs/', views.add_docs, name='add_docs'),
     path('api/docs/<int:doc_id>/', views.edit_doc, name='edit'),
-    url(r'^.*/', TemplateView.as_view(template_name="index.html"), name='base'),
+    # url(r'^.*/', TemplateView.as_view(request, template_name="index.html"), name='base'),
+    url(r'^.*/', views.index, name='base'),
 ]

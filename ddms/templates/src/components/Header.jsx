@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {Row, Navbar, Nav, NavItem, FormControl, FormGroup, Button, Modal, MenuItem, DropdownButton } from 'react-bootstrap';
-
+import { Redirect } from 'react-router-dom';
 import DocApi from './../Api/api';
 
 class Header extends Component {
@@ -9,7 +9,8 @@ class Header extends Component {
         showModal: false,
         docType: 'financial',
         text: '',
-        filterBy: 'all'
+        filterBy: 'all',
+        redirect: false
 	};
 
     handleInputChange = (e) => {
@@ -60,6 +61,17 @@ class Header extends Component {
         })
         .catch((e)=> { console.log(e)})
     }
+
+    logoutUser = () => {
+        DocApi.logoutUser()
+        .then((r)=>{
+            this.setState({
+                redirect: true
+            })
+        })
+    }
+
+
     onChange = (e) => {
         this.setState({
             file:e.target.files[0]
@@ -107,6 +119,10 @@ class Header extends Component {
 	}
 
     render() {
+        if (this.state.redirect) {
+            return <Redirect to='/docs'/>;
+        }
+        
         return(
             <Row>
                 {this.ComponentModal()}
@@ -149,6 +165,9 @@ class Header extends Component {
                     })()}
                     <Button className="pull-right" bsStyle="primary" onClick={this.showModalDialog}>
                         Upload
+                    </Button>
+                    <Button className="pull-right" bsStyle="danger" onClick={this.logoutUser}>
+                        LogOut
                     </Button>
                     </Navbar.Form>
                     

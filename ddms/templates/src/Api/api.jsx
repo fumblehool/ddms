@@ -30,6 +30,16 @@ export default {
         })
     },
 
+    logoutUser(){
+        return fetch(`${API_HOST}/api/logout/`, {
+            'credentials': 'include',
+            'headers': {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-CSRFToken': getCookie('csrftoken')
+            }
+        })
+    },
+
     RegisterUser(body){
         return fetch(`${API_HOST}/api/register/`, {
             'credentials': 'include',

@@ -3,8 +3,8 @@ import assign from 'object-assign';
 // import ApiConstants from '../constants/ApiConstants';
 
 
-export const setCookie = (name, value, options) => {
-  return Cookies.set(name, value, options);
+export const setCookie = (name, value) => {
+  return Cookies.set(name, value);
 };
 
 export const removeCookie = (name, options = {}) => {
