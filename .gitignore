@@ -2,7 +2,7 @@
 *.*~
 venv/
 ddms/media/
-ddms/templates/node_modules
-ddms/templates/yarn-error.log
+node_modules
+yarn-error.log
 ddms/static/
 ddms/static/index.html

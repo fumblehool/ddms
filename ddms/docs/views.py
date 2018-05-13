@@ -22,11 +22,13 @@ def register(request):
         try:
             response = controller.register(request)
             # create JSON response object
-            return HttpResponse(status=200,
+            return HttpResponse(status=response['status'],
                                 content_type='application/json',
                                 content=json.dumps(response))
         except Exception as e:
-            return HttpResponseBadRequest(json.dumps(str(e)))
+            response = {}
+            response['error'] = str(e)
+            return HttpResponseBadRequest(json.dumps(response))
 
 
 def get_all_docs(request):
@@ -56,17 +58,14 @@ def edit_doc(request, doc_id):
         return HttpResponseBadRequest(json.dumps(str(e)))
 
 @csrf_exempt
-# @login_required
 def add_docs(request):
     if request.method != 'POST':
         return HttpResponseBadRequest(json.dumps("Please send POST request"))
 
-    # get user_id
-    user_id = request.session['_auth_user_id']
 
     #get response from controller
     try:
-        response = controller.add_docs(request, user_id)
+        response = controller.add_docs(request)
         # create JSON response object
         return HttpResponse(status=200,
                             content_type='application/json',

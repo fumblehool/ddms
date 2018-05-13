@@ -9,6 +9,7 @@ import Login from './Login';
 import Home from './Home';
 import NotFound from './NotFound';
 import Register from './Register';
+import Index from './Index';
 
 import { getCookie, setCookie } from './../utils';
 
@@ -22,12 +23,12 @@ class App extends Component {
     return (
       <BrowserRouter>
         <Grid>
-
           {(()=>{
             if(getCookie('token')){
               return (
                 <Switch>
                   <Route exact path="/" component={Home} />
+                  <Route exact path="/index" render={()=> (<Redirect to="/docs" />)} />
                   <Route exact path="/docs" component={Home} />
                   <Route exact path="/login" render={() => (<Redirect to="/docs" />)} />
                   <Route exact path="/register" render={() => (<Redirect to="/docs" />)} />
@@ -37,8 +38,9 @@ class App extends Component {
             }
             return (
               <Switch>
-                <Route exact path="/" render={()=> (<Redirect to="/login" />)} />
-                <Route exact path="/docs" render={()=> (<Redirect to="/login" />)} />
+                <Route exact path="/" render={()=> (<Redirect to="/index" />)} />
+                <Route exact path="/index" component={Index} />
+                <Route exact path="/docs" render={()=> (<Redirect to="/index" />)} />
                 <Route exact path="/login" render={(props)=> <Login {...props} setCookie={this.setCookie}/>} />
                 <Route exact path="/register" component={Register} />
                 <Route component={NotFound} />

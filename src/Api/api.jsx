@@ -18,12 +18,18 @@ export default {
         })
     },
 
-    loginUser(body){
+    loginUser(username, password){
+        const body = {
+            username,
+            password,
+            'csrftoken': getCookie('csrftoken')
+        }
         return fetch(`${API_HOST}/api/login/`, {
             'credentials': 'include',
             'method': 'POST',
             'headers': {
                 'Content-Type': 'application/x-www-form-urlencoded',
+                'X_TOKEN': getCookie('token'),
                 'X-CSRFToken': getCookie('csrftoken')
             },
             'body': queryString.stringify(body)
@@ -35,6 +41,7 @@ export default {
             'credentials': 'include',
             'headers': {
                 'Content-Type': 'application/x-www-form-urlencoded',
+                'X_TOKEN': getCookie('token'),
                 'X-CSRFToken': getCookie('csrftoken')
             }
         })
@@ -46,6 +53,7 @@ export default {
             'method': 'POST',
             'headers': {
                 'Content-Type': 'application/x-www-form-urlencoded',
+                'X_TOKEN': getCookie('token'),
                 'X-CSRFToken': getCookie('csrftoken')
             },
             'body': queryString.stringify(body)
@@ -61,7 +69,7 @@ export default {
             'credentials': 'include',
             'method': 'POST',
             'headers': {
-                'X-CSRFToken': getCookie('csrftoken')
+                'X_TOKEN': getCookie('token')
             },
             'body': formData
         })
@@ -73,9 +81,8 @@ export default {
             'method': 'DELETE',
             'headers': {
                 'Content-Type': 'application/x-www-form-urlencoded',
-                'X-CSRFToken': getCookie('csrftoken')
+                'X_TOKEN': getCookie('token')
             },
         })
-
     }
 };

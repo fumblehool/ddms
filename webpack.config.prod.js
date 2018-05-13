@@ -83,7 +83,7 @@ const config = {
     'extensions': ['*', '.js', '.jsx', '.scss', '.json']
   },
   'output': {
-    'path': path.resolve(__dirname, './../static'),
+    'path': path.resolve(__dirname, './ddms/static'),
     'filename': 'scripts/[name].[chunkhash].js',
     'chunkFilename': 'scripts/[name].[chunkhash].js',
     'publicPath': '/static/'

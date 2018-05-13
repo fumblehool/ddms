@@ -22,7 +22,11 @@ html, body, #fullHt{
 }
 
 .w-100 {
-    min-width:90%;
+    min-width:96%;
+}
+
+.w-r-20 {
+    margin-right: 20px
 }
 
 .box {
@@ -151,7 +155,7 @@ a {
 
 @media all and (min-width: 480px) {
     .Login {
-      padding: 60px 0;
+      padding: 0px 0;
     }
   
     .Login form {
@@ -159,4 +163,37 @@ a {
       max-width: 320px;
     }
   }
-  
+
+
+.upload-btn {
+    background-color: #31B0D5;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 4px;
+    border-color: #46b8da;
+    position: fixed;
+    bottom: -4px;
+    right: 10px;
+    cursor: pointer;
+}
+
+.fixedContainer {
+    background-color:#31B0D5;
+    border-color: #46b8da;
+    border-radius: 4px;
+    position: fixed;
+    padding: 2em;
+    left: 90%;
+    top: 90%;
+    color: white;
+    transform: translate(-50%, -50%);
+}
+
+.doclist-tr:hover {
+    cursor: pointer;
+    background-color: #676e7a;
+}
+
+.selected-row {
+    background-color: #676e7a;
+}

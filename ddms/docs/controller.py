@@ -13,16 +13,14 @@ def register(request):
     # Register user
     username = request.POST.get('username', None)
     password = request.POST.get('username', None)
-    user, created = User.objects.get_or_create(username=username, email='nil')
+    user, created = User.objects.get_or_create(username=username)
     if created:
-        user.save()
         user.set_password(password)
+        user.save()
         response = {}
+        response['status'] = 200
         response['user_id'] = user.pk
-        request.session['_auth_user_id'] = user.pk
-        request.session['loggedIn'] = True
         return response
-
 
 def get_all_docs(request):
     token = request.COOKIES.get('token')
@@ -77,15 +75,18 @@ def edit_doc(media_id, method):
     return (str(method))
 
 
-def add_docs(request, user_id):
+def add_docs(request):
     # empty response object
     response = {}
 
     # get the current timestamp
     timestamp = datetime.datetime.now()
-    # insert new entry
     
+    # get user_id
+    token = request.COOKIES.get('token')
+    user_id = Token.objects.get(key=token).user_id
 
+    # insert new entry
     category_id = Category.objects.filter(category_text=request.POST.get('doctype'))[0].category_id
     record = Media.objects.create(created_by=user_id, is_deleted=False,
                                        created_at=timestamp, last_edited_at=timestamp,

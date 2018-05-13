@@ -4,6 +4,8 @@ import { Redirect } from 'react-router-dom';
 import { getCookie, setCookie } from './../utils';
 import DocApi from './../Api/api';
 
+import NavBar from './NavBar';
+
 class Login extends Component {
 
     state = {
@@ -25,12 +27,7 @@ class Login extends Component {
     }
 
     onSubmit = () => {
-        const body = {
-            username: this.state.username,
-            password: this.state.password
-        };
-
-        DocApi.loginUser(body)
+        DocApi.loginUser(this.state.username, this.state.password)
           .then((r)=> r.json())
           .then((r)=> {
             if(r['token']){
@@ -52,6 +49,8 @@ class Login extends Component {
 
     render() {
         return(
+            <div>
+                <NavBar/>
             <Grid>
                 {(()=>{
                     if (this.state.redirect) {
@@ -60,6 +59,7 @@ class Login extends Component {
                 })()}
   
             <div className="Login">
+            <h1 className="text-center">Login</h1>
             <form>
                 <FormGroup controlId="email" bsSize="large">
                     <ControlLabel>Username</ControlLabel>
@@ -90,14 +90,8 @@ class Login extends Component {
                 </Button>
                 </form>
             </div>
-
-
-
-
-
-
-
             </Grid>
+            </div>
         )
     }
 }
