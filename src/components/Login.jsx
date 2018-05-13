@@ -12,6 +12,7 @@ class Login extends Component {
         username: '',
         password: '',
         redirect: false,
+        error: ''
 	};
 
     handleUsernameChange = (e) => {
@@ -37,9 +38,13 @@ class Login extends Component {
                 })
                 window.location.reload();
             }
+            if(r['non_field_errors']){
+                this.setState({
+                    error: r['non_field_errors']
+                });
+            }
           })
           .catch((error)=>{
-              console.log(error);
           })
     }
 
@@ -88,6 +93,15 @@ class Login extends Component {
                 >
                     Login
                 </Button>
+                {(()=>{
+                    if(this.state.error.length>0){
+                        return(
+                            <p className="danger">
+                                {this.state.error}
+                            </p>
+                        );
+                    } 
+                })()}
                 </form>
             </div>
             </Grid>

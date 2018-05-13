@@ -2,7 +2,6 @@ import datetime
 from .models import Media, Category
 from IPython import embed
 from django.contrib.auth.models import User
-# from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth import authenticate
 from django.middleware.csrf import _get_new_csrf_token
 

@@ -13,7 +13,7 @@ class Home extends Component {
         searchText: '',
         docSelected: false,
         selectedDoc: '',
-        filterBy: 'all'
+        filterBy: 'all',
     }
 
     componentWillMount(){
@@ -85,13 +85,13 @@ class Home extends Component {
                     docSelected={this.state.docSelected}
                     deleteSelectedDoc={this.deleteSelectedDoc}
                     handleFilterChange={this.handleFilterChange}
-                    addNewUpload={this.addNewUpload}
                 />
                 <Section
                     docs={this.state.organisedDocs}
                     selectedDoc={this.state.selectedDoc}
                     ChangeselectedDoc={this.ChangeselectedDoc}
                     filterBy={this.state.filterBy}
+                    addNewUpload={this.addNewUpload}
                 />
             </div>
         )

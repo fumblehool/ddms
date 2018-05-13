@@ -38,40 +38,11 @@ class Header extends Component {
         }
     }
 
-    showModalDialog = () => {
-		this.setState({
-			showModal: true
-		});
-	}
-
-	closeModalDialog = () => {
-		this.setState({
-			showModal: false
-		});
-    }
-    
-    handleTypeSelect = (e) => {
-        this.setState({
-            docType: e
-        });
-    }
-
     handleFilterChange = (filterBy) => {
         this.setState({
             filterBy
         });
         this.props.handleFilterChange(filterBy);
-    }
-
-    handleSubmit = (e) => {
-        DocApi.uploadFile(this.state.file, this.state.docType)
-        .then((r)=> r.json())
-        .then((r)=> {
-            alert("Upload Successful!");
-            this.props.addNewUpload(r);
-            this.closeModalDialog();
-        })
-        .catch((e)=> { console.log(e)})
     }
 
     logoutUser = () => {
@@ -82,49 +53,6 @@ class Header extends Component {
         })
         window.location.reload();
     }
-
-
-    onChange = (e) => {
-        this.setState({
-            file:e.target.files[0]
-        })
-    }
-
-    ComponentModal = () => {
-		return (
-			<Modal className="black-text" show={this.state.showModal} onHide={this.closeModalDialog}>
-				<Modal.Header closeButton>
-					<Modal.Title>
-						File Upload
-					</Modal.Title>
-				</Modal.Header>
-				<Modal.Body>
-					<p>
-                        <FormGroup
-                            controlId="formBasicFile"
-                            >
-                            <FormControl
-                                type="file"
-                                onChange={this.onChange}
-                            />
-                            <DropdownButton
-                                bsSize="medium"
-                                bsStyle="primary"
-                                title={this.state.docType}
-                                id="dropdown-size-large"
-                                onSelect={this.handleTypeSelect}
-                            >
-                                <MenuItem eventKey="financial">Financial</MenuItem>
-                                <MenuItem eventKey="marketing">Marketing</MenuItem>
-                                <MenuItem eventKey="technical">Technical</MenuItem>
-                            </DropdownButton>
-                            <Button onClick={this.handleSubmit}> Submit </Button>
-                        </FormGroup>
-					</p>
-				</Modal.Body>
-			</Modal>
-		);
-    }
     
     confirmationModal = () => {
         return (
@@ -134,7 +62,7 @@ class Header extends Component {
 						{this.state.modalTitle}
 					</Modal.Title>
 				</Modal.Header>
-				<Modal.Body>
+				<Modal.Body className="text-center">
 					<p>
                         {(()=>{
                             if(this.state.modalType === 'delete'){
@@ -142,7 +70,7 @@ class Header extends Component {
                                     <div>
                                     <p>Delete?</p>
                                     <Button bsStyle="danger" onClick={this.deleteDoc}> Confirm </Button>
-                                    <Button onClick={this.closeConirmationModal}> Close </Button>
+                                    <Button className="m-l-lg" onClick={this.closeConirmationModal}> Close </Button>
                                     </div>
                                 );
                             }
@@ -150,7 +78,7 @@ class Header extends Component {
                                 <div>
                                     <p>Logout?</p>
                                     <Button bsStyle="danger" onClick={this.logoutUser}> Confirm </Button>
-                                    <Button onClick={this.closeConirmationModal}> Close </Button>
+                                    <Button className="m-l-lg" onClick={this.closeConirmationModal}> Close </Button>
                                 </div>
                             )
                         })()}
@@ -197,7 +125,6 @@ class Header extends Component {
         
         return(
             <Row>
-                {this.ComponentModal()}
                 {this.confirmationModal()}
             <Navbar inverse collapseOnSelect>
                 <Navbar.Header>
@@ -223,8 +150,6 @@ class Header extends Component {
                                 <MenuItem eventKey="marketing">Marketing</MenuItem>
                                 <MenuItem eventKey="technical">Technical</MenuItem>
                             </DropdownButton>
-                    
-                    
                     </FormGroup>
 
                     {(()=>{
@@ -236,9 +161,7 @@ class Header extends Component {
                             )
                         }
                     })()}
-                    <Button className="pull-right m-l-lg" bsStyle="primary" onClick={this.showModalDialog}>
-                        Upload
-                    </Button>
+                    
                     <Button className="pull-right m-l-lg" bsStyle="danger" onClick={this.confirmLogOut}>
                         LogOut
                     </Button>    

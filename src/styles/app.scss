@@ -182,11 +182,17 @@ a {
     border-color: #46b8da;
     border-radius: 4px;
     position: fixed;
-    padding: 2em;
-    left: 90%;
+    padding: 1.5em;
+    left: 85%;
     top: 90%;
     color: white;
     transform: translate(-50%, -50%);
+    box-shadow: 0 2px 4px 0 #a2a2a2;
+    cursor: pointer;
+}
+
+.fixedContainer:hover {
+    box-shadow: 0 4px 8px 0 #a2a2a2;
 }
 
 .doclist-tr:hover {
@@ -196,4 +202,9 @@ a {
 
 .selected-row {
     background-color: #676e7a;
+}
+
+.danger {
+    color: red;
+    font-size: 24px;
 }

@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
-import {Row, Modal, Button, ControlLabel, FormControl, FormGroup } from 'react-bootstrap';
+import {Row, Modal, Button, ControlLabel, FormControl, FormGroup, Grid } from 'react-bootstrap';
 import fetch from 'isomorphic-fetch';
 import queryString from 'query-string';
 import DocApi from './../Api/api';
 import { getCookie } from './../utils';
 import NavBar from './NavBar';
 
-class Login extends Component {
+class Register extends Component {
 
     state = {
         username: '',
-        password: ''
+        password: '',
+        error: ''
 	};
 
     handleUsernameChange = (e) => {
@@ -36,7 +37,7 @@ class Login extends Component {
         .then((r)=> {
             if(r['error']){
                 this.setState({
-                    error: r['error']
+                    error: "User already exists"
                 });
             }
             else{
@@ -97,8 +98,17 @@ class Login extends Component {
                         type="button"
                         onClick={this.onSubmit}
                     >
-                        Login
+                        SignUp
                     </Button>
+                    {(()=>{
+                        if(this.state.error.length>0){
+                            return(
+                                <p className="danger">
+                                    {this.state.error}
+                                </p>
+                            );
+                        } 
+                    })()}
                     </form>
                 </div>
             </Grid>
@@ -107,4 +117,4 @@ class Login extends Component {
     }
 }
 
-export default Login;
+export default Register;
