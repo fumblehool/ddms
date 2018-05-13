@@ -16,10 +16,11 @@ class Media(models.Model):
 
 
 class Category(models.Model):
-    verbose_name_plural = "categories"
     category_id = models.IntegerField(primary_key=True)
     category_text = models.CharField(max_length=100)
-
+    class Meta:
+        verbose_name_plural = "categories"
+    
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def create_auth_token(sender, instance=None, created=False, **kwargs):

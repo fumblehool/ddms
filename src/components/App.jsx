@@ -39,8 +39,8 @@ class App extends Component {
             return (
               <Switch>
                 <Route exact path="/" render={()=> (<Redirect to="/index" />)} />
-                <Route exact path="/index" component={Index} />
-                <Route exact path="/docs" render={()=> (<Redirect to="/index" />)} />
+                <Route exact path="/index" render={(props)=> <Login {...props} setCookie={this.setCookie}/>} />
+                <Route exact path="/docs" render={(props)=> <Login {...props} setCookie={this.setCookie}/>} />
                 <Route exact path="/login" render={(props)=> <Login {...props} setCookie={this.setCookie}/>} />
                 <Route exact path="/register" component={Register} />
                 <Route component={NotFound} />

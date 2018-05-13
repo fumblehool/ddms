@@ -198,11 +198,11 @@ class Header extends Component {
                             return(
                                 <div className="in-blk">
                                 <Button className="m-l-lg" bsStyle="primary" onClick={this.confirmDelete}>
-                                    <Glyphicon glyph="trash" />
+                                    <Glyphicon glyph="trash" className="m-r-sm" />
                                     Delete
                                 </Button>
                                 <Button className="m-l-lg" bsStyle="primary" onClick={this.showEditModal}>
-                                    <Glyphicon glyph="edit" />
+                                    <Glyphicon glyph="edit" className="m-r-sm" />
                                     Edit
                                 </Button>
                                 </div>

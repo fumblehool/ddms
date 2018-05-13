@@ -209,3 +209,31 @@ a {
 .in-blk {
     display: inline-block;
 }
+
+.m-r-sm {
+    margin-right: 5px;
+}
+
+.not-found {
+    padding: 150px;
+}
+
+.not-found > h1 {
+    font-size: 50px;
+}
+.not-found > article {
+    display: block;
+    text-align: left;
+    width: 650px;
+    margin: 0 auto;
+}
+
+.not-found > a {
+    color: #dc8100;
+    text-decoration: none;
+}
+
+.not-found > a:hover {
+    color: #333;
+    text-decoration: none;
+}

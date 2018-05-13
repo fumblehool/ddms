@@ -1,32 +1,42 @@
 from .models import Media, Category
-from IPython import embed
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate
-from django.middleware.csrf import _get_new_csrf_token
 from django.http import QueryDict
 from rest_framework.authtoken.models import Token
 from django.utils import timezone
 
 def register(request):
-    # Register user
+    """
+    Register new user
+    """
+    # username and password params from request
     username = request.POST.get('username', None)
     password = request.POST.get('username', None)
+    # create new user in database
     user, created = User.objects.get_or_create(username=username)
+    # if new user is created, add password 
     if created:
         user.set_password(password)
         user.save()
+        # response object
         response = {}
+        # Add required fields to response - status code and user_id
         response['status'] = 200
         response['user_id'] = user.pk
+        
         return response
 
+
 def get_all_docs(request):
+    """
+    Fetch docs from database
+    """
+    # get token from cookies
     token = request.COOKIES.get('token')
-
+    # verify token and get user_id
     user_id = Token.objects.get(key=token).user_id
-
+    # fetch all docs created by user_id and is_deleted false
     media_list = Media.objects.filter(created_by=user_id, is_deleted=False)
-    
+    # response object
     response = []
 
     for media in media_list:
