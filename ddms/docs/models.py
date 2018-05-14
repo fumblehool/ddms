@@ -10,7 +10,7 @@ class Media(models.Model):
         id, title, type, created_at, last_edited_at, is_deleted, created_by, file
     """
 
-    media_id = models.IntegerField(primary_key=True)
+    media_id = models.AutoField(primary_key=True)
     media_title = models.CharField(max_length=20, blank=False)
     media_type = models.IntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
