@@ -1,14 +1,9 @@
 import json
 from django.shortcuts import render
 from . import controller
-from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect
-from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse, HttpResponseBadRequest
 from django.views.decorators.csrf import csrf_exempt
-from django.contrib.auth.views import login
 
-from django.contrib.auth import logout
-
-from IPython import embed
 
 def index(request):
     return render(request, "index.html")
@@ -44,9 +39,6 @@ def get_all_docs(request):
         return HttpResponseBadRequest(json.dumps(str(e)))
 
 
-
-@csrf_exempt
-# @login_required
 def edit_doc(request, doc_id):
     try:
         response = controller.edit_doc(request, doc_id, request.method)
@@ -57,11 +49,10 @@ def edit_doc(request, doc_id):
     except Exception as e:
         return HttpResponseBadRequest(json.dumps(str(e)))
 
-@csrf_exempt
+
 def add_docs(request):
     if request.method != 'POST':
         return HttpResponseBadRequest(json.dumps("Please send POST request"))
-
 
     #get response from controller
     try:

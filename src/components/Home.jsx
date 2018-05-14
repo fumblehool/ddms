@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-
 import Section from './Section';
 import Header from './Header';
-
 import DocApi from './../Api/api';
 
 

@@ -5,8 +5,6 @@ import { removeCookie } from './../utils';
 class Header extends Component {
 
     state = {
-        showModal: false,
-        docType: 'financial',
         text: '',
         filterBy: 'all',
         confirmModal: false,

@@ -9,7 +9,6 @@ import Login from './Login';
 import Home from './Home';
 import NotFound from './NotFound';
 import Register from './Register';
-import Index from './Index';
 
 import { getCookie, setCookie } from './../utils';
 
@@ -38,7 +37,7 @@ class App extends Component {
             }
             return (
               <Switch>
-                <Route exact path="/" render={()=> (<Redirect to="/index" />)} />
+                <Route exact path="/" render={(props)=> <Login {...props} setCookie={this.setCookie}/>} />
                 <Route exact path="/index" render={(props)=> <Login {...props} setCookie={this.setCookie}/>} />
                 <Route exact path="/docs" render={(props)=> <Login {...props} setCookie={this.setCookie}/>} />
                 <Route exact path="/login" render={(props)=> <Login {...props} setCookie={this.setCookie}/>} />

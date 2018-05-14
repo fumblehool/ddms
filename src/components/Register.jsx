@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
-import {Row, Modal, Button, ControlLabel, FormControl, FormGroup, Grid } from 'react-bootstrap';
-import fetch from 'isomorphic-fetch';
-import queryString from 'query-string';
+import { Button, ControlLabel, FormControl, FormGroup, Grid } from 'react-bootstrap';
 import DocApi from './../Api/api';
-import { getCookie } from './../utils';
 import NavBar from './NavBar';
 
-class Register extends Component {
 
+class Register extends Component {
     state = {
         username: '',
         password: '',
@@ -45,20 +42,6 @@ class Register extends Component {
             }
         })
 
-    }
-
-    getCookie = (name) => {
-        if (!document.cookie) {
-          return null;
-        }
-        const token = document.cookie.split(';')
-          .map(c => c.trim())
-          .filter(c => c.startsWith(name + '='));
-    
-        if (token.length === 0) {
-          return null;
-        }
-        return decodeURIComponent(token[0].split('=')[1]);
     }
 
     validateForm = () => {

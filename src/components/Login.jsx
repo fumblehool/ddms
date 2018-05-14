@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import {Row, Navbar, Nav, NavItem, FormControl, FormGroup, Button, ControlLabel, Modal, Grid } from 'react-bootstrap';
-import { Redirect } from 'react-router-dom';
-import { getCookie, setCookie } from './../utils';
+import { FormControl, FormGroup, Button, ControlLabel, Grid } from 'react-bootstrap';
+import { setCookie } from './../utils';
 import DocApi from './../Api/api';
-
 import NavBar from './NavBar';
 
 class Login extends Component {
@@ -11,7 +9,6 @@ class Login extends Component {
     state = {
         username: '',
         password: '',
-        redirect: false,
         error: ''
 	};
 
@@ -33,9 +30,6 @@ class Login extends Component {
           .then((r)=> {
             if(r['token']){
                 this.props.setCookie(r['token']);
-                this.setState({
-                    redirect: true
-                })
                 window.location.reload();
             }
             if(r['non_field_errors']){
@@ -56,13 +50,7 @@ class Login extends Component {
         return(
             <div>
                 <NavBar/>
-            <Grid>
-                {(()=>{
-                    if (this.state.redirect) {
-                        return <Redirect to='/docs'/>;
-                    }
-                })()}
-  
+            <Grid>  
             <div className="Login">
             <h1 className="text-center">Login</h1>
             <form>

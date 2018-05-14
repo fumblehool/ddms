@@ -5,6 +5,11 @@ from rest_framework.authtoken.models import Token
 from django.conf import settings
 
 class Media(models.Model):
+    """
+    Media Model
+        id, title, type, created_at, last_edited_at, is_deleted, created_by, file
+    """
+
     media_id = models.IntegerField(primary_key=True)
     media_title = models.CharField(max_length=20, blank=False)
     media_type = models.IntegerField()
@@ -16,6 +21,10 @@ class Media(models.Model):
 
 
 class Category(models.Model):
+    """
+    Category Model
+        id, category_text
+    """
     category_id = models.IntegerField(primary_key=True)
     category_text = models.CharField(max_length=100)
     class Meta:
@@ -24,5 +33,8 @@ class Category(models.Model):
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def create_auth_token(sender, instance=None, created=False, **kwargs):
+    """
+    Method for user authentication
+    """
     if created:
         Token.objects.create(user=instance)
