@@ -99,7 +99,8 @@ export default {
             'method': 'PUT',
             'headers': {
                 'Content-Type': 'application/x-www-form-urlencoded',
-                'X_TOKEN': getCookie('token')
+                'X_TOKEN': getCookie('token'),
+                'X-CSRFToken': getCookie('csrftoken')
             },
             'body': queryString.stringify(body)
         })

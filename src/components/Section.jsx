@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Table, Modal, FormControl, FormGroup, Button, DropdownButton, MenuItem} from 'react-bootstrap';
+import { Row, Col, Table, Modal, FormControl, FormGroup, Button, DropdownButton, MenuItem, Alert } from 'react-bootstrap';
 import moment from 'moment';
 import DocApi from '../Api/api';
 
@@ -11,6 +11,7 @@ class Section extends Component {
     state = {
         showModal: false,
         docType: 'financial',
+        show: false
     }
 
     onDocClick = (media_id) => {
@@ -45,7 +46,9 @@ class Section extends Component {
         DocApi.uploadFile(this.state.file, this.state.docType)
         .then((r)=> r.json())
         .then((r)=> {
-            alert("Upload Successful!");
+            this.setState({
+                show: true
+            });
             this.props.addNewUpload(r);
             this.closeModalDialog();
         })
@@ -88,10 +91,33 @@ class Section extends Component {
 		);
     }
 
+    handleDismiss = () => {
+        this.setState({
+            show: false
+        })
+    }
+
+    uploadSuccess = () => {
+        if (this.state.show) {
+            setTimeout(() => {
+                this.setState({
+                    show: false
+                });
+            }, 3000);
+
+            return (
+              <Alert bsStyle="success" onDismiss={this.handleDismiss}>
+                <strong>Upload Successful!</strong>
+              </Alert>
+            );
+        }
+    }
+
     
     render() {
         return(
             <Row>
+            {this.uploadSuccess()}
             {this.ComponentModal()}
                 <Button bsStyle="success" className="fixedContainer" onClick={this.showModalDialog}>
                     Upload

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Section from './Section';
 import Header from './Header';
 import DocApi from './../Api/api';
-
+import { Alert } from 'react-bootstrap';
 
 class Home extends Component {
     state = {
@@ -12,6 +12,8 @@ class Home extends Component {
         docSelected: false,
         selectedDoc: '',
         filterBy: 'all',
+        show: false,
+        showText: ''
     }
 
     componentWillMount(){
@@ -49,8 +51,9 @@ class Home extends Component {
         .then((r)=> r.json())
         .then((r) => {
             if(r['status'] === 'successful'){
-                alert("Document Update Successfully");
                 this.setState({
+                    show: true,
+                    showText: "Document Deleted Successfully",
                     docs: this.state.docs.filter((doc) => doc['media_id'] !== this.state.selectedDoc),
                     organisedDocs: this.state.organisedDocs.filter((doc) => doc['media_id'] !== this.state.selectedDoc),
                     selectedDoc: {}
@@ -82,7 +85,6 @@ class Home extends Component {
         .then((r)=> r.json())
         .then((r) => {
             if(r['status'] === 'successful'){
-                alert("Document Updated Successfully");
                 let docs = this.state.docs.map((doc)=>{
                     if(doc['media_id'] === this.state.selectedDoc){
                         doc['media_title'] = docName;
@@ -100,12 +102,38 @@ class Home extends Component {
                 })
 
                 this.setState({
+                    show: true,
+                    showText: "Document updated successfully!",
                     docs,
                     organisedDocs
                 })
             }
         })
     }
+
+    handleDismiss = () => {
+        this.setState({
+            show: false,
+            showText: ''
+        });
+    }
+
+    showAlert = () => {
+        if (this.state.show) {
+            setTimeout(() => {
+                this.setState({
+                    show: false,
+                    showText: ''
+                });
+              }, 3000);
+            return (
+              <Alert bsStyle="success" onDismiss={this.handleDismiss}>
+                <strong>{this.state.showText}</strong>
+              </Alert>
+            );
+        }
+    }
+
 
     render(){
         return (
@@ -117,6 +145,7 @@ class Home extends Component {
                     handleFilterChange={this.handleFilterChange}
                     handleEditDocName={this.handleEditDocName}
                 />
+                {this.showAlert()}
                 <Section
                     docs={this.state.organisedDocs}
                     selectedDoc={this.state.selectedDoc}
