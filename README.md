@@ -25,6 +25,37 @@ Daman Document Management System. A web app which helps manage user's documents.
 
 # Steps for Installation -:
 
+## Using Docker
+1) Clone this repository
+
+    ```$ git clone https://github.com/fumblehool/ddms.git```
+
+2) Goto Project directory
+
+    ```$ cd ddms```
+
+3) Build docker image using
+
+    ```$sudo docker build -t ddms .```
+
+4) Run the docker image
+
+    ```$docker run -p 8000:8000 ddms```
+
+5) Open ```http://127.0.0.1:8000/docs/``` in browser.
+
+    Use Following credentials:
+ 
+      	username: daman
+        
+        password: damanpreet
+         
+    Or Register new user. 
+
+
+
+## Without Using Docker
+
 1) Clone this repository
 
     ```$ git clone https://github.com/fumblehool/ddms.git```
@@ -56,15 +87,12 @@ Daman Document Management System. A web app which helps manage user's documents.
 
     ```$pip install -r requirements.txt```
 
-8) Setup custom domain.
-
-    ```$sudo echo "127.0.0.1   dev.ddms.com" | sudo tee --append /etc/hosts```
 
 9) Run django server.
 
     ```$python ddms/manage.py runserver```
 
-10) Open ```http://dev.ddms.com:8000/docs/``` in browser.
+10) Open ```http://127.0.0.1:8000/docs/``` in browser.
 
     Use Following credentials:
  
